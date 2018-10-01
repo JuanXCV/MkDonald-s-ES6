@@ -56,7 +56,7 @@ function main() {
     buildGame()
   }
   function buildGameOver(score) {
-    var gameOverElement = builDom(`
+    gameOverElement = builDom(`
     <main class="gameover container">
       <h1 class="gameover-title">Game Over</h1>
       <p>Score: <span class="score"></span></p>

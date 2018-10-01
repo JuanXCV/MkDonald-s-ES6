@@ -53,10 +53,10 @@ Game.prototype._startLoop = function() {
   //Mover jugador
   self._handleKeyDown = function(evt){
     if (evt.key === "ArrowRight") {
-      self.player.setDirection(1)
+      self.player.setDirection(50)
     }
     if (evt.key === "ArrowLeft") {
-      self.player.setDirection(-1)
+      self.player.setDirection(-50)
     }
   }
   document.addEventListener("keydown",self._handleKeyDown);
@@ -82,16 +82,18 @@ Game.prototype._updateAll = function() {
   self.ingredients.forEach(function(item) {
     item.update();
   });
-  // //Filtrar si ingredient es vivo o muerto
-  // self.ingredients = ingredients.filter(function(){
-  //   self.ingredient.isDeath();
-  // })
+  self.ingredients = self.ingredients.filter(function(item) {
+    if (item.isDeath()) {
+      return false;
+    }
+    return true;
+  })
   //Actualizar player
   self.player.update();
   //Comprobar colisiones
-  // self._checkAllCollision();
+  self._checkAllCollision();
   //Actualizar UI
-  // self._updateUI();
+  self._updateUI();
 }
 
 Game.prototype._renderAll = function() {
@@ -117,17 +119,28 @@ Game.prototype._spawnIngredient = function() {
 }
 Game.prototype._checkAllCollision = function() {
   var self = this;
-  //Verificar Colisiones
+  self.ingredients.forEach(function(item, idx) {
+    if(self.player.checkCollision(item)) {
+      /////////
+      if(item.condition === "friend"){
+        self.score += 1;
+      } else if(item.condition === "enemy"){
+        self.player.lives -= 1;
+      }
+      /////////
+    self.ingredients.splice(idx, 1);
+    }
+  });
 }
 Game.prototype._isPlayerAlive = function() {
   var self = this;
-  return true;//Temporal
-  //comprobar si el player esta vivo
+  return self.player.lives > 0;
 }
 Game.prototype._updateUI = function() {
   var self = this;
-  scoreElement.innertext = self.score;
-  livesElement.innertext = self.player.lives;
+
+  self.scoreElement.innerText = self.score;
+  self.livesElement.innerText = self.player.lives;
 }
 Game.prototype.onOver = function(callback) {
   var self = this;
@@ -135,6 +148,6 @@ Game.prototype.onOver = function(callback) {
 }
 Game.prototype.destroy = function() {
   var self = this;
+  document.removeEventListener("keydown" , self._handleKeyDown)
   self.gameElement.remove();
-  //remove del Event Listener
 }
