@@ -7,19 +7,31 @@ function Player(canvas, y) {
   self.vel = 8;
   self.direction = 0;
   self.lives = 3;
+  self.sizeY = self.y;
 }
 Player.prototype.update = function() {
   var self = this;
   self._checkLimits();
   self.x += self.direction*self.vel;
 }
-Player.prototype.render = function() {
+Player.prototype.render = function(ingredients) {
   var self = this;
 
   var img = document.createElement('img')
   img.src = 'images/burger-box.png'
   self.ctx.drawImage(img,self.x, self.y, self.size, self.size);
 
+  if(ingredients) {
+    ingredients.forEach(function(item,idx){
+      sizeY = (item.size/2) * (idx+1)
+      self.sizeY = self.y - sizeY
+
+      var img2 = document.createElement('img')
+      img2.src = 'images/' + item.condition + '.png'
+      
+      self.ctx.drawImage(img2 ,self.x, self.sizeY, self.size, self.size); 
+    })
+  }
   // self.ctx.fillStyle = "blue";
   // self.ctx.fillRect(self.x, self.y, self.size, self.size);
 };
@@ -39,9 +51,9 @@ Player.prototype._checkLimits = function() {
 Player.prototype.checkCollision = function(object) {
   var self = this;
 
-  var crashTop = self.y < object.y + object.size;
+  var crashTop = self.sizeY < object.y + object.size;
   var crashRight = self.x + self.size > object.x;
-  var crashBottom = self.y + self.size > object.y ;
+  var crashBottom = self.sizeY + self.size > object.y ;
   var crashLeft = self.x < object.x + object.size ;
 
   if (crashLeft && crashRight && crashTop && crashBottom) {
@@ -49,4 +61,8 @@ Player.prototype.checkCollision = function(object) {
   }
 
   return false;
+}
+Player.prototype.reSize = function() {
+  var self = this;
+  self.sizeY = self.y
 }

@@ -140,10 +140,21 @@ Game.prototype._renderAll = function() {
   self.ingredients.forEach(function(item){
     item.render();
   })
-  self.player.render();
+  self.player.render(self.ingredientsCollided);
 }
+
 Game.prototype._clearAll = function() {
+  
   var self = this;
+  if(self.ingredientsCollided[0]){
+    self.lastIngredient = self.ingredientsCollided[self.ingredientsCollided.length-1]; 
+    if(self.lastIngredient.condition === "top-bread"){
+      self.score += self.ingredientsCollided.length
+      self.ingredientsCollided = []
+      self.player.reSize();
+    }
+  }
+
   //Limpiar todo
   self.ctx.clearRect(0, 0, self.width, self.height);
 }
@@ -168,13 +179,13 @@ Game.prototype._checkAllCollision = function() {
       // /////////
     var collided = self.ingredients.splice(idx, 1);
     self.ingredientsCollided.push(collided[0])
-    console.log(self.ingredientsCollided)
     }
   });
 }
 Game.prototype._isPlayerAlive = function() {
   var self = this;
-  return self.player.lives > 0;
+  return self.player.lives > 0 && self.player.sizeY > 0
+
 }
 Game.prototype._updateUI = function() {
   var self = this;
