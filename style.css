@@ -34,3 +34,20 @@ body {
 #main-container {
   height: 100vh;
 }
+
+.buttons {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 400px;
+  flex-direction: row;
+  border: 1px solid red;
+}
+.button-left, .button-right{
+  font-size: 50px;
+  border: 5px solid black;
+  border-radius: 500px;
+  padding: 0 15px;
+}

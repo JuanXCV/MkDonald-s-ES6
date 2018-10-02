@@ -28,6 +28,10 @@ Game.prototype._init = function() {
       <div class="game-canvas">
         <canvas class="canvas"></canvas>
       </div>
+      <div class='buttons'>
+        <button class="button-left">L</button>
+        <button class="button-right">R</button>
+      </div>
     </main>
   `)
   self.parentElement.appendChild(self.gameElement)
@@ -37,6 +41,8 @@ Game.prototype._init = function() {
   self.livesElement = document.querySelector('.lives .value')
   self.scoreElement = document.querySelector('.score .value')
   self.pauseButton = document.querySelector('.pause')
+  self.leftButton = document.querySelector('.button-left')
+  self.rightButton = document.querySelector('.button-right')
   //Cambiar width y height
   self.width = self.canvasParentElement.clientWidth;
   self.height = self.canvasParentElement.clientHeight;
@@ -68,6 +74,7 @@ Game.prototype._startLoop = function() {
   }
   document.addEventListener("keyup",self._handleKeyUp);
 
+
   self._handleKeyDown = function(evt){
     if (evt.key === "ArrowRight") {
       self.player.setDirection(1)
@@ -77,6 +84,27 @@ Game.prototype._startLoop = function() {
     }
   }
   document.addEventListener("keydown",self._handleKeyDown);
+
+
+  self._goLeft = function() {
+    self.player.setDirection(-1)
+  }
+
+  self.leftButton.addEventListener('mousedown',self._goLeft)
+
+  self._goRight = function() {
+    self.player.setDirection(1)
+  }
+
+  self.rightButton.addEventListener('mousedown',self._goRight)
+
+  self._stop = function() {
+    console.log("ok")
+    self.player.setDirection(0)
+  }
+
+  self.leftButton.addEventListener('mouseup',self._stop())
+  self.rightButton.addEventListener('mouseup',self._stop())
 
 
   //Loop
@@ -149,7 +177,7 @@ Game.prototype._clearAll = function() {
   if(self.ingredientsCollided[0]){
     self.lastIngredient = self.ingredientsCollided[self.ingredientsCollided.length-1]; 
     if(self.lastIngredient.condition === "top-bread"){
-      self.score += self.ingredientsCollided.length
+      self.score += self.ingredientsCollided.length-1
       self.ingredientsCollided = []
       self.player.reSize();
     }
