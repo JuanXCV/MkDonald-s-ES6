@@ -1,18 +1,17 @@
-function Player(canvas,y) {
+function Player(canvas, y) {
   var self = this;
   self.ctx = canvas.getContext('2d')
-  self.size = 80;
-  self.x = 0;
+  self.size = 60;
+  self.x = 10;
   self.y = y - self.size * 2;
-  self.vel = 5;
+  self.vel = 8;
   self.direction = 0;
   self.lives = 3;
 }
 Player.prototype.update = function() {
   var self = this;
   self._checkLimits();
-  self.x += self.direction;
-  self.direction = 0;
+  self.x += self.direction*self.vel;
 }
 Player.prototype.render = function() {
   var self = this;
@@ -30,20 +29,20 @@ Player.prototype.setDirection = function(direction) {
 };
 Player.prototype._checkLimits = function() {
   var self = this;
-  if (self.x < 0) {
-    self.setDirection(50);
+  if (self.x < 10) {
+    self.x += 8
   }
-  else if (self.x > self.ctx.canvas.width - self.size) {
-    self.setDirection(-50);
+  else if (self.x > self.ctx.canvas.width - self.size - 10) {
+    self.x -=8;
   }
 }
 Player.prototype.checkCollision = function(object) {
   var self = this;
 
-  var crashTop = self.y < object.y;
+  var crashTop = self.y < object.y + object.size;
   var crashRight = self.x + self.size > object.x;
-  var crashBottom = self.y + self.size > object.y + object.size ;
-  var crashLeft = self.x < object.x ;
+  var crashBottom = self.y + self.size > object.y ;
+  var crashLeft = self.x < object.x + object.size ;
 
   if (crashLeft && crashRight && crashTop && crashBottom) {
     return true;

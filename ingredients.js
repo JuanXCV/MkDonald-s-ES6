@@ -1,4 +1,4 @@
-function Ingredient(canvas, x, y) {
+function Ingredient(canvas, x) {
   var self = this;
   self.ctx = canvas.getContext('2d')
   self.size = 60;
@@ -36,6 +36,5 @@ Ingredient.prototype.isWho = function() {
 
   var random = Math.floor(Math.random() * 9)
   self.condition = self.variety[random]
-  console.log(self.condition)
   
 }

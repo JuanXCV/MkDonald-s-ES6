@@ -17,6 +17,9 @@ Game.prototype._init = function() {
           <span class="label">Lives:</span>
           <span class="value"></span>
         </div>
+        <div>
+          <button class='pause'>||</button>
+        </div>
         <div class="score">
           <span class="label">Score:</span>
           <span class="value"></span>
@@ -33,6 +36,7 @@ Game.prototype._init = function() {
   self.canvasElement = document.querySelector('.canvas')
   self.livesElement = document.querySelector('.lives .value')
   self.scoreElement = document.querySelector('.score .value')
+  self.pauseButton = document.querySelector('.pause')
   //Cambiar width y height
   self.width = self.canvasParentElement.clientWidth;
   self.height = self.canvasParentElement.clientHeight;
@@ -48,25 +52,59 @@ Game.prototype._startLoop = function() {
   //Valores a 0 y []
   self.score = 0;
   self.ingredients = [];
+  self.ingredientsCollided = [];
   //Crear jugador
   self.player = new Player(self.canvasElement, self.height);
   //Mover jugador
-  self._handleKeyDown = function(evt){
+
+
+  self._handleKeyUp = function(evt) {
     if (evt.key === "ArrowRight") {
-      self.player.setDirection(50)
+      self.player.setDirection(0)
     }
     if (evt.key === "ArrowLeft") {
-      self.player.setDirection(-50)
+      self.player.setDirection(0)
+    }
+  }
+  document.addEventListener("keyup",self._handleKeyUp);
+
+  self._handleKeyDown = function(evt){
+    if (evt.key === "ArrowRight") {
+      self.player.setDirection(1)
+    }
+    if (evt.key === "ArrowLeft") {
+      self.player.setDirection(-1)
     }
   }
   document.addEventListener("keydown",self._handleKeyDown);
+
+
   //Loop
+
+  self.play = "play"
+
+  self.playGame = function() {
+    self.play = "play"
+    self.pauseButton.removeEventListener('click',self.playGame)
+    self.pauseButton.addEventListener('click', self.pauseGame)
+    requestAnimationFrame(loop)
+  }
+  self.pauseGame = function() {
+    self.play = "pause"
+    self.pauseButton.removeEventListener('click', self.pauseGame)
+    self.pauseButton.addEventListener('click',self.playGame)
+  }
+  self.pauseButton.addEventListener('click',self.pauseGame)
   function loop(){
     self._clearAll();
     self._updateAll();
     self._renderAll();
-    if(self._isPlayerAlive()){
+   
+
+    if(self._isPlayerAlive() && self.play==="play"){
       requestAnimationFrame(loop);
+    } else if(self.play==="pause") {
+      
     } else {
       self.OnGameOverCallback();
     }
@@ -121,14 +159,16 @@ Game.prototype._checkAllCollision = function() {
   var self = this;
   self.ingredients.forEach(function(item, idx) {
     if(self.player.checkCollision(item)) {
-      /////////
-      if(item.condition === "friend"){
-        self.score += 1;
-      } else if(item.condition === "enemy"){
-        self.player.lives -= 1;
-      }
-      /////////
-    self.ingredients.splice(idx, 1);
+      // /////////
+      // if(item.condition === "friend"){
+      //   self.score += 1;
+      // } else if(item.condition === "enemy"){
+      //   self.player.lives -= 1;
+      // }
+      // /////////
+    var collided = self.ingredients.splice(idx, 1);
+    self.ingredientsCollided.push(collided[0])
+    console.log(self.ingredientsCollided)
     }
   });
 }
