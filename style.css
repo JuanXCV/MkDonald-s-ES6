@@ -23,6 +23,7 @@ body {
   display: flex;
   justify-content: space-around;
   height: 50px;
+  width: 100%;
   color:black;
   align-items: center;
 }
@@ -30,7 +31,6 @@ body {
 .game-canvas {
   width: 100%;
   height: 100%;
-  background-color: yellow;
 }
 #main-container {
   height: 100vh;
@@ -49,6 +49,12 @@ body {
   width: 30%;
   height: 100%;
 }
+.container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .splash {
   background-color: green;
   background-image: url('images/logo.png');
@@ -56,21 +62,73 @@ body {
   background-position-x: center; 
   background-position-y: 40px;
   background-repeat: no-repeat; 
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
-.make-button {
+.gameover {
+  flex-direction: column;
+  font-size: 7vh;
+  background-color: green;
+}
+.gameover-title {
+  margin-top: 0;
+}
+.button {
   background-color: white;
   padding: 2vh 5vh;
   margin-top: 40vh;
   border-radius: 30px;
   font-size: 6vh;
   box-shadow: 4px 7px 1px darkgreen;
+  transition: all .27s;
 }
+.button-gameover{
+  margin-top: 0;
+}
+.make-button:focus, .make-button:active{
+  transform: translateY(7px);
+  box-shadow: 4px 0px 1px darkgreen;
+}
+
 @media (min-width: 700px) {
   .splash {
     background-size: 20%;
+  }
+}
+
+.instructions-parent {
+  position: absolute;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+@media (max-width: 1024px){
+  .instructions-left, .instructions-right {
+    height: 50%;
+    width: 30%;
+    background-image: url('images/instructions.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    margin: 0 2vh;
+    margin-top: 20vh;
+  }
+}
+@media (min-width: 1024px){
+  .instructions-left {
+    height: 30%;
+    width: 30%;
+    background-image: url('images/tecla-left.png');
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position-x: center;
+  }
+  .instructions-right{
+    height: 30%;
+    width: 30%;
+    background-image: url('images/tecla-right.png');
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position-x: center;
   }
 }

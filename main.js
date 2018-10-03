@@ -18,7 +18,7 @@ function main() {
   function buildSplash() {
     splashElement = builDom(`
       <main class="splash container">
-        <div class='make-button'>MAKE!</div>
+        <div class='button make-button'>MAKE!</div>
       </main>
     `)
     mainContainerElement.appendChild(splashElement)
@@ -59,11 +59,11 @@ function main() {
     <main class="gameover container">
       <h1 class="gameover-title">Game Over</h1>
       <p>Score: <span class="score"></span></p>
-      <button>reMake!</button>
+      <div class='button button-gameover'>REMAKE!</div>
     </main>
     `)
     mainContainerElement.appendChild(gameOverElement);
-    gameOverButton = document.querySelector('button')
+    gameOverButton = document.querySelector('.button-gameover')
     gameOverButton.addEventListener('click', handleGameOverClick)
 
     var scoreElement = document.querySelector('.score')

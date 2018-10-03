@@ -6,7 +6,7 @@ function Player(canvas, y) {
   self.y = y - self.size * 3;
   self.vel = 8;
   self.direction = 0;
-  self.lives = 3;
+  self.lives = 1;
   self.sizeY = self.y;
 }
 Player.prototype.update = function() {
@@ -23,7 +23,7 @@ Player.prototype.render = function(ingredients) {
 
   if(ingredients) {
     ingredients.forEach(function(item,idx){
-      sizeY = (item.size/2) * (idx+1)
+      sizeY = (item.size/3) * (idx+1)
       self.sizeY = self.y - sizeY
 
       var img2 = document.createElement('img')

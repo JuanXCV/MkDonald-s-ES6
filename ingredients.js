@@ -5,7 +5,7 @@ function Ingredient(canvas, x) {
   self.x = x;
   self.y = 0
   self.vel = 3;
-  self.variety = ["tomate", "top-bread", "lettuce", "meat", "bacon", "mayonnaise", "ketchup", "mustard", "onion"]
+  self.variety = ["tomate", "death", "top-bread", "lettuce", "meat", "bacon", "mayonnaise", "ketchup", "mustard", "onion"]
   self.isWho();
 
 }

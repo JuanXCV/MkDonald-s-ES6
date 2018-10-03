@@ -37,6 +37,7 @@ Game.prototype._init = function() {
        
   self.parentElement.appendChild(self.gameElement)
   //Seleccionar elementos del DOM
+  self.mainElement = document.querySelector('.game')
   self.canvasParentElement = document.querySelector('.game-canvas')
   self.canvasElement = document.querySelector('.canvas')
   self.livesElement = document.querySelector('.lives .value')
@@ -57,6 +58,7 @@ Game.prototype._init = function() {
 Game.prototype._startLoop = function() {
   var self = this;
   //Valores a 0 y []
+  self.count = 0;
   self.score = 0;
   self.ingredients = [];
   self.ingredientsCollided = [];
@@ -115,6 +117,9 @@ Game.prototype._startLoop = function() {
     self.play = "play"
     self.pauseButton.removeEventListener('click',self.playGame)
     self.pauseButton.addEventListener('click', self.pauseGame)
+    document.removeEventListener('touchstart',self.playGame)
+    document.removeEventListener('keydown',self.playGame)
+    self.elementInstructions.remove()
     requestAnimationFrame(loop)
   }
   self.pauseGame = function() {
@@ -128,7 +133,11 @@ Game.prototype._startLoop = function() {
     self._clearAll();
     self._updateAll();
     self._renderAll();
+    if(self.count===80){
+      self.handleInstructions();
+    }
    
+    self.count ++
 
     if(self._isPlayerAlive() && self.play==="play"){
       requestAnimationFrame(loop);
@@ -172,18 +181,9 @@ Game.prototype._renderAll = function() {
   })
   self.player.render(self.ingredientsCollided);
 }
-
 Game.prototype._clearAll = function() {
   
   var self = this;
-  if(self.ingredientsCollided[0]){
-    self.lastIngredient = self.ingredientsCollided[self.ingredientsCollided.length-1]; 
-    if(self.lastIngredient.condition === "top-bread"){
-      self.score += self.ingredientsCollided.length-1
-      self.ingredientsCollided = []
-      self.player.reSize();
-    }
-  }
 
   //Limpiar todo
   self.ctx.clearRect(0, 0, self.width, self.height);
@@ -200,17 +200,12 @@ Game.prototype._checkAllCollision = function() {
   var self = this;
   self.ingredients.forEach(function(item, idx) {
     if(self.player.checkCollision(item)) {
-      // /////////
-      // if(item.condition === "friend"){
-      //   self.score += 1;
-      // } else if(item.condition === "enemy"){
-      //   self.player.lives -= 1;
-      // }
-      // /////////
     var collided = self.ingredients.splice(idx, 1);
     self.ingredientsCollided.push(collided[0])
     }
-  });
+  })
+  self.handleTopBurger();
+  self.handleDeath();
 }
 Game.prototype._isPlayerAlive = function() {
   var self = this;
@@ -231,4 +226,44 @@ Game.prototype.destroy = function() {
   var self = this;
   document.removeEventListener("keydown" , self._handleKeyDown)
   self.gameElement.remove();
+}
+
+Game.prototype.handleInstructions = function() {
+  var self = this;
+  self.pauseGame();
+
+
+
+  self.elementInstructions = builDom(`
+    <div class='instructions-parent'>
+      <div class='instructions-left'>
+      </div>
+      <div class='instructions-right'>
+      </div>
+    </div>
+  `)
+  self.mainElement.appendChild(self.elementInstructions)
+  document.addEventListener('touchstart',self.playGame)
+  document.addEventListener('keydown',self.playGame)
+}
+Game.prototype.handleTopBurger = function() {
+  var self= this;
+  if(self.ingredientsCollided[0]){
+    self.lastIngredient = self.ingredientsCollided[self.ingredientsCollided.length-1]; 
+    if(self.lastIngredient.condition === "top-bread"){
+      self.score += self.ingredientsCollided.length-1
+      self.ingredientsCollided = []
+      self.player.reSize();
+    }
+  }
+}
+Game.prototype.handleDeath = function() {
+  var self= this;
+  if(self.ingredientsCollided[0]){
+    self.lastIngredient = self.ingredientsCollided[self.ingredientsCollided.length-1]; 
+    if(self.lastIngredient.condition === "death"){
+      console.log("ok")
+      self.player.lives -=1
+    }
+  }
 }
