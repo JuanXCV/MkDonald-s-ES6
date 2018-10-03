@@ -243,8 +243,11 @@ Game.prototype.handleInstructions = function() {
     </div>
   `)
   self.mainElement.appendChild(self.elementInstructions)
-  document.addEventListener('touchstart',self.playGame)
-  document.addEventListener('keydown',self.playGame)
+
+  setTimeout(function(){
+    document.addEventListener('touchstart',self.playGame)
+    document.addEventListener('keydown',self.playGame)
+  }, 1000);
 }
 Game.prototype.handleTopBurger = function() {
   var self= this;
@@ -252,8 +255,10 @@ Game.prototype.handleTopBurger = function() {
     self.lastIngredient = self.ingredientsCollided[self.ingredientsCollided.length-1]; 
     if(self.lastIngredient.condition === "top-bread"){
       self.score += self.ingredientsCollided.length-1
-      self.ingredientsCollided = []
-      self.player.reSize();
+      setTimeout(function(){
+        self.ingredientsCollided = []
+        self.player.reSize();
+      },200);
     }
   }
 }
@@ -262,8 +267,9 @@ Game.prototype.handleDeath = function() {
   if(self.ingredientsCollided[0]){
     self.lastIngredient = self.ingredientsCollided[self.ingredientsCollided.length-1]; 
     if(self.lastIngredient.condition === "death"){
-      console.log("ok")
-      self.player.lives -=1
+      setTimeout(function(){
+        self.player.lives -=1
+      },100);
     }
   }
 }

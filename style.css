@@ -50,7 +50,7 @@ body {
   height: 100%;
 }
 .container {
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,6 +70,7 @@ body {
 }
 .gameover-title {
   margin-top: 0;
+  text-align: center;
 }
 .button {
   background-color: white;
