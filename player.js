@@ -3,7 +3,7 @@ function Player(canvas, y) {
   self.ctx = canvas.getContext('2d')
   self.size = 60;
   self.x = 10;
-  self.y = y - self.size * 2;
+  self.y = y - self.size * 3;
   self.vel = 8;
   self.direction = 0;
   self.lives = 3;

@@ -29,11 +29,12 @@ Game.prototype._init = function() {
         <canvas class="canvas"></canvas>
       </div>
       <div class='buttons'>
-        <button class="button-left">L</button>
-        <button class="button-right">R</button>
+        <div class="button-left"></div>
+        <div class="button-right"></div>
       </div>
     </main>
   `)
+       
   self.parentElement.appendChild(self.gameElement)
   //Seleccionar elementos del DOM
   self.canvasParentElement = document.querySelector('.game-canvas')
@@ -90,21 +91,20 @@ Game.prototype._startLoop = function() {
     self.player.setDirection(-1)
   }
 
-  self.leftButton.addEventListener('mousedown',self._goLeft)
+  self.leftButton.addEventListener('touchstart',self._goLeft)
 
   self._goRight = function() {
     self.player.setDirection(1)
   }
 
-  self.rightButton.addEventListener('mousedown',self._goRight)
+  self.rightButton.addEventListener('touchstart',self._goRight)
 
   self._stop = function() {
-    console.log("ok")
     self.player.setDirection(0)
   }
 
-  self.leftButton.addEventListener('mouseup',self._stop())
-  self.rightButton.addEventListener('mouseup',self._stop())
+  self.leftButton.addEventListener('touchend',self._stop)
+  self.rightButton.addEventListener('touchend',self._stop)
 
 
   //Loop
@@ -123,6 +123,7 @@ Game.prototype._startLoop = function() {
     self.pauseButton.addEventListener('click',self.playGame)
   }
   self.pauseButton.addEventListener('click',self.pauseGame)
+
   function loop(){
     self._clearAll();
     self._updateAll();
