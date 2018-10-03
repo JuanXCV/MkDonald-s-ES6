@@ -18,12 +18,11 @@ function main() {
   function buildSplash() {
     splashElement = builDom(`
       <main class="splash container">
-        <h1 class="splash-title">Make Donald's!</h1>
-        <button>Make!</button>
+        <div class='make-button'>MAKE!</div>
       </main>
     `)
     mainContainerElement.appendChild(splashElement)
-    splashButton = document.querySelector('button')
+    splashButton = document.querySelector('.make-button')
     splashButton.addEventListener('click', handleSplashClick)
   }
   function destroySplash() {

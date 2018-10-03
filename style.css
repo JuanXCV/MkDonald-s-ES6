@@ -10,6 +10,7 @@ html {
 body {
   margin: 0;
   padding: 0;
+  font-family: VT323, Arial, Helvetica, sans-serif;
 }
 .game {
   text-align: center;
@@ -49,7 +50,27 @@ body {
   height: 100%;
 }
 .splash {
+  background-color: green;
   background-image: url('images/logo.png');
-  background-size: 100%;
+  background-size: 80%;
+  background-position-x: center; 
+  background-position-y: 40px;
+  background-repeat: no-repeat; 
   height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.make-button {
+  background-color: white;
+  padding: 2vh 5vh;
+  margin-top: 40vh;
+  border-radius: 30px;
+  font-size: 6vh;
+  box-shadow: 4px 7px 1px darkgreen;
+}
+@media (min-width: 700px) {
+  .splash {
+    background-size: 20%;
+  }
 }

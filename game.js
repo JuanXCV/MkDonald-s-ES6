@@ -138,6 +138,7 @@ Game.prototype._startLoop = function() {
       self.OnGameOverCallback();
     }
   }
+
   requestAnimationFrame(loop);
 }
 
