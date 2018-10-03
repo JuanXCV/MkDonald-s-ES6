@@ -5,7 +5,7 @@ function Ingredient(canvas, x) {
   self.x = x;
   self.y = 0
   self.vel = 3;
-  self.variety = ["tomate", "death", "top-bread", "lettuce", "meat", "bacon", "mayonnaise", "ketchup", "mustard", "onion"]
+  self.variety = ["death", "top-bread", "lettuce", "meat", "cheese", "onion","bacon","tomato","ketchup","mayonnaise"]
   self.isWho();
 
 }
@@ -34,7 +34,7 @@ Ingredient.prototype.isDeath = function() {
 Ingredient.prototype.isWho = function() {
   var self = this;
 
-  var random = Math.floor(Math.random() * 9)
+  var random = Math.floor(Math.random() * 10)
   self.condition = self.variety[random]
   
 }

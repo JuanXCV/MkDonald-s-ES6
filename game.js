@@ -254,10 +254,12 @@ Game.prototype.handleTopBurger = function() {
   if(self.ingredientsCollided[0]){
     self.lastIngredient = self.ingredientsCollided[self.ingredientsCollided.length-1]; 
     if(self.lastIngredient.condition === "top-bread"){
-      self.score += self.ingredientsCollided.length-1
+      self.pauseGame();
       setTimeout(function(){
+        self.score += self.ingredientsCollided.length-1
         self.ingredientsCollided = []
         self.player.reSize();
+        self.playGame();
       },200);
     }
   }

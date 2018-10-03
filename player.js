@@ -19,7 +19,7 @@ Player.prototype.render = function(ingredients) {
 
   var img = document.createElement('img')
   img.src = 'images/burger-box.png'
-  self.ctx.drawImage(img,self.x, self.y, self.size, self.size);
+  self.ctx.drawImage(img,self.x, self.y, self.size, self.size-20);
 
   if(ingredients) {
     ingredients.forEach(function(item,idx){
@@ -29,7 +29,7 @@ Player.prototype.render = function(ingredients) {
       var img2 = document.createElement('img')
       img2.src = 'images/' + item.condition + '.png'
       
-      self.ctx.drawImage(img2 ,self.x, self.sizeY, self.size, self.size); 
+      self.ctx.drawImage(img2 ,self.x, self.sizeY, self.size, self.size-20); 
     })
   }
   // self.ctx.fillStyle = "blue";
