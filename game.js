@@ -191,7 +191,7 @@ Game.prototype._clearAll = function() {
 Game.prototype._spawnIngredient = function() {
   var self = this;
   //Random para elegir coordenadas
-  if (Math.random() > 0.97) {
+  if (Math.random() > 0.98) {
     var randomX = Math.random() * self.width * 0.9;
     self.ingredients.push(new Ingredient(self.canvasElement, randomX));
   }
@@ -259,6 +259,9 @@ Game.prototype.handleTopBurger = function() {
         self.score += self.ingredientsCollided.length-1
         self.ingredientsCollided = []
         self.player.reSize();
+        ////
+        // self.ingredients.forEach()
+        ////
         self.playGame();
       },200);
     }

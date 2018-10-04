@@ -33,7 +33,8 @@ body {
   height: 100%;
   background-image: url('images/fondo2.jpg');
   background-repeat: no-repeat;
-  background-size: 200% 
+  background-size: 180% ;
+  margin-top: 3%;
 }
 #main-container {
   height: 100vh;
