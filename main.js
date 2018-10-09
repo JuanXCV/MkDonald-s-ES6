@@ -1,16 +1,16 @@
 function builDom(html) {
-  var div = document.createElement('div')
+  const div = document.createElement('div')
   div.innerHTML = html;
   return div.children[0];
 }
 function main() {
-  var mainContainerElement = document.querySelector('#main-container')
+  const mainContainerElement = document.querySelector('#main-container')
   
   //Splash
-  var splashElement = null;
-  var splashButton = null;
+  let splashElement = null;
+  let splashButton = null;
 
-  var handleSplashClick = function() {
+  const handleSplashClick = () => {
     destroySplash();
     buildGame();
   }
@@ -32,8 +32,8 @@ function main() {
 
   //Game
 
-  var game = null;
-  var handleGameOver = function(){
+  let game = null;
+  const handleGameOver = () => {
     destroyGame()
     buildGameOver(game.score)
   }
@@ -47,10 +47,10 @@ function main() {
 
   //GameOver
 
-  var gameOverElement = null;
-  var gameOverButton = null;
+  let gameOverElement = null;
+  let gameOverButton = null;
 
-  var handleGameOverClick = function() {
+  const handleGameOverClick = () => {
     destroyGameOver()
     buildGame()
   }
@@ -66,7 +66,7 @@ function main() {
     gameOverButton = document.querySelector('.button-gameover')
     gameOverButton.addEventListener('click', handleGameOverClick)
 
-    var scoreElement = document.querySelector('.score')
+    const scoreElement = document.querySelector('.score')
     scoreElement.innerText = score;
   }
   function destroyGameOver() {

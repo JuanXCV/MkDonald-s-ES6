@@ -1,68 +1,69 @@
-function Player(canvas, y) {
-  var self = this;
-  self.ctx = canvas.getContext('2d')
-  self.size = 60;
-  self.x = 10;
-  self.y = y - self.size * 3;
-  self.vel = 8;
-  self.direction = 0;
-  self.lives = 1;
-  self.sizeY = self.y;
-}
-Player.prototype.update = function() {
-  var self = this;
-  self._checkLimits();
-  self.x += self.direction*self.vel;
-}
-Player.prototype.render = function(ingredients) {
-  var self = this;
-
-  var img = document.createElement('img')
-  img.src = 'images/burger-box.png'
-  self.ctx.drawImage(img,self.x, self.y, self.size, self.size-20);
-
-  if(ingredients) {
-    ingredients.forEach(function(item,idx){
-      sizeY = (item.size/3) * (idx+1)
-      self.sizeY = self.y - sizeY
-
-      var img2 = document.createElement('img')
-      img2.src = 'images/' + item.condition + '.png'
-      
-      self.ctx.drawImage(img2 ,self.x, self.sizeY, self.size, self.size-20); 
-    })
+class Player {
+  constructor(canvas, y) {
+    this.ctx = canvas.getContext('2d')
+    this.size = 60;
+    this.x = 10;
+    this.y = y - this.size * 3;
+    this.vel = 8;
+    this.direction = 0;
+    this.lives = 1;
+    this.sizeY = this.y;
   }
-  // self.ctx.fillStyle = "blue";
-  // self.ctx.fillRect(self.x, self.y, self.size, self.size);
-};
-Player.prototype.setDirection = function(direction) {
-  var self = this;
-  self.direction = direction
-};
-Player.prototype._checkLimits = function() {
-  var self = this;
-  if (self.x < 10) {
-    self.x += 8
+  update() {
+    
+    this._checkLimits();
+    this.x += this.direction*this.vel;
   }
-  else if (self.x > self.ctx.canvas.width - self.size - 10) {
-    self.x -=8;
+  render(ingredients) {
+    
+
+    const img = document.createElement('img')
+    img.src = 'images/burger-box.png'
+    this.ctx.drawImage(img,this.x, this.y, this.size, this.size-20);
+
+    if(ingredients) {
+      ingredients.forEach((item,idx) => {
+        const sizeY = (item.size/3) * (idx+1)
+        this.sizeY = this.y - sizeY
+
+        const img2 = document.createElement('img')
+        img2.src = 'images/' + item.condition + '.png'
+        
+        this.ctx.drawImage(img2 ,this.x, this.sizeY, this.size, this.size-20); 
+      })
+    }
+    // this.ctx.fillStyle = "blue";
+    // this.ctx.fillRect(this.x, this.y, this.size, this.size);
+  };
+  setDirection(direction) {
+    
+    this.direction = direction
+  };
+  _checkLimits() {
+    
+    if (this.x < 10) {
+      this.x += 8
+    }
+    else if (this.x > this.ctx.canvas.width - this.size - 10) {
+      this.x -=8;
+    }
   }
-}
-Player.prototype.checkCollision = function(object) {
-  var self = this;
+  checkCollision(object) {
+    
 
-  var crashTop = self.sizeY < object.y + object.size;
-  var crashRight = self.x + self.size > object.x;
-  var crashBottom = self.sizeY + self.size > object.y ;
-  var crashLeft = self.x < object.x + object.size ;
+    const crashTop = this.sizeY < object.y + object.size;
+    const crashRight = this.x + this.size > object.x;
+    const crashBottom = this.sizeY + this.size > object.y ;
+    const crashLeft = this.x < object.x + object.size ;
 
-  if (crashLeft && crashRight && crashTop && crashBottom) {
-    return true;
+    if (crashLeft && crashRight && crashTop && crashBottom) {
+      return true;
+    }
+
+    return false;
   }
-
-  return false;
-}
-Player.prototype.reSize = function() {
-  var self = this;
-  self.sizeY = self.y
+  reSize() {
+    
+    this.sizeY = this.y
+  }
 }

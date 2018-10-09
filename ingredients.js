@@ -1,40 +1,40 @@
-function Ingredient(canvas, x) {
-  var self = this;
-  self.ctx = canvas.getContext('2d')
-  self.size = 60;
-  self.x = x;
-  self.y = 0
-  self.vel = 5;
-  self.variety = ["death", "top-bread", "lettuce", "meat", "cheese", "onion","bacon","tomato","ketchup","mayonnaise"]
-  self.isWho();
+class Ingredient{
 
-}
-Ingredient.prototype.update = function() {
-  var self = this;
+  constructor(canvas, x){
 
-  self.y += self.vel
-}
-Ingredient.prototype.render = function() {
-  var self = this;
-  var img = document.createElement('img')
-  img.src = 'images/' + self.condition + '.png'
-  self.ctx.drawImage(img ,self.x, self.y, self.size, self.size); 
-  
-  // if(self.condition === "enemy"){
-  //   self.ctx.fillStyle = "red";
-  // }else if(self.condition === "friend"){
-  //   self.ctx.fillStyle = "green";
-  // }
-  // self.ctx.fillRect(self.x, self.y, self.size, self.size);
-}
-Ingredient.prototype.isDeath = function() {
-  var self = this;
-  return self.y > self.ctx.canvas.height;
-}
-Ingredient.prototype.isWho = function() {
-  var self = this;
+    this.ctx = canvas.getContext('2d')
+    this.size = 60;
+    this.x = x;
+    this.y = 0
+    this.vel = 5;
+    this.variety = ["death", "top-bread", "lettuce", "meat", "cheese", "onion","bacon","tomato","ketchup","mayonnaise"]
+    this.isWho();
+  }
 
-  var random = Math.floor(Math.random() * 10)
-  self.condition = self.variety[random]
-  
+
+  update() {
+
+    this.y += this.vel
+  }
+  render() {
+    const img = document.createElement('img')
+    img.src = 'images/' + this.condition + '.png'
+    this.ctx.drawImage(img ,this.x, this.y, this.size, this.size); 
+    
+    // if(this.condition === "enemy"){
+    //   this.ctx.fillStyle = "red";
+    // }else if(this.condition === "friend"){
+    //   this.ctx.fillStyle = "green";
+    // }
+    // this.ctx.fillRect(this.x, this.y, this.size, this.size);
+  }
+  isDeath() {
+    return this.y > this.ctx.canvas.height;
+  }
+  isWho() {
+
+    const random = Math.floor(Math.random() * 10)
+    this.condition = this.variety[random]
+    
+  }
 }
